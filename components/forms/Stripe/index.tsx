@@ -1,8 +1,11 @@
 // import { productOrderFormData } from '@/lib/actions/form.actions';
 "use client"
 
+import { getDomainUrl } from '@/lib/utils';
 import { AddressElement, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { useState } from 'react';
+
+const redirectUrl = getDomainUrl(true, 'thanks')
 
 const StripeForm = () => {
   const [message, setMessage] = useState<{error: string} | {}>();
@@ -21,9 +24,12 @@ const StripeForm = () => {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: "http://localhost:3000/thanks",
+        return_url: redirectUrl,
       },
     });
+
+    const baseUrl = `${window.location.protocol}//${window.location.hostname}`;
+const return_url = `${baseUrl}/thanks`;
 
     if (error.type === "card_error" || error.type === "validation_error") {
       setMessage(error);

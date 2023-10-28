@@ -13,6 +13,7 @@ const Product = () => {
   const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
 
+
   // Fetch product from Stripe.
   useEffect(() => {
     async function getData() {

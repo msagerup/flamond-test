@@ -8,13 +8,6 @@ export async function createSubscription(
   customerId: string
 ) {
   try {
-    // const subscriptions: Stripe.ApiList<Stripe.Subscription> =
-    //   await stripe.subscriptions.list({
-    //     customer: customerId,
-    //     price: priceId,
-    //     status: 'all',
-    //   });
-
     const subscription: Stripe.Subscription = await stripe.subscriptions.create(
       {
         customer: customerId,
@@ -31,6 +24,7 @@ export async function createSubscription(
 
     return {
       subscriptionId: subscription.id,
+      // @ts-ignore
       clientSecret: subscription?.latest_invoice?.payment_intent?.client_secret,
     };
   } catch (error: any) {
