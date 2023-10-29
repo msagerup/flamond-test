@@ -3,9 +3,10 @@
 
 import { getDomainUrl } from '@/lib/utils';
 import { AddressElement, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 
-const redirectUrl = getDomainUrl(true, 'thanks')
+// Redirect path after purchase.
+const redirectUrl = getDomainUrl(false, 'thanks')
 
 const StripeForm = () => {
   const [message, setMessage] = useState<{error: string} | {}>();
@@ -13,8 +14,16 @@ const StripeForm = () => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+/**
+ * Handles Stripe checkout flow.
+ * Redirects user after successful purchase.  
+ *
+ * @param {FormEvent<HTMLFormElement>} event - Form submit event.
+ * @returns {null} - Redirects user to value of redirectUrl func.
+ * 
+ */
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
     if (!stripe || !elements) {
       return;
@@ -27,9 +36,6 @@ const StripeForm = () => {
         return_url: redirectUrl,
       },
     });
-
-    const baseUrl = `${window.location.protocol}//${window.location.hostname}`;
-const return_url = `${baseUrl}/thanks`;
 
     if (error.type === "card_error" || error.type === "validation_error") {
       setMessage(error);

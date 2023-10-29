@@ -1,4 +1,5 @@
-import { ProductData } from '@/lib/actions/user.actions';
+
+import { ProductData } from '@/lib/types';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Stripe from 'stripe';

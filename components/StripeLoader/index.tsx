@@ -1,5 +1,6 @@
 import StripeForm from '@/components/forms/Stripe';
-import { ProductData, createSubscription } from '@/lib/actions/user.actions';
+import { createSubscription } from '@/lib/actions/user.actions';
+import { CreateSubscriptionResult, ProductData } from '@/lib/types';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { useEffect, useState } from 'react';
@@ -9,16 +10,11 @@ const stripePromise = loadStripe(
 );
 
 interface StripeLoaderProps {
-  product: ProductData;
+  product:ProductData
 }
 
 const StripeLoader = ({ product }: StripeLoaderProps) => {
-  const [intent, setIntent] = useState<{
-    subscriptionId: string;
-    clientSecret: string;
-  } | null>(null);
-
-  console.log();
+  const [intent, setIntent] = useState<CreateSubscriptionResult | null>(null);
 
   useEffect(() => {
     let isMounted = true; // mounted ref
@@ -38,7 +34,6 @@ const StripeLoader = ({ product }: StripeLoaderProps) => {
         }
       }
     }
-
     if (product.default_price) {
       fetchSecret();
     }

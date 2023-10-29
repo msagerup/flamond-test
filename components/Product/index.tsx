@@ -2,7 +2,8 @@
 
 
 import StripeProduct from '@/components/StripeProduct';
-import { ProductData, getProductByID } from '@/lib/actions/user.actions';
+import { getProductByID } from '@/lib/actions/user.actions';
+import { ProductData } from '@/lib/types';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -13,8 +14,7 @@ const Product = () => {
   const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
 
-
-  // Fetch product from Stripe.
+  // Fetch single product from Stripe.
   useEffect(() => {
     async function getData() {
       try {
