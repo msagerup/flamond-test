@@ -1,6 +1,8 @@
 # Flamond - Stripe subscription test.
+Built with Next.js, allowing users to browse and purchase various subscription products. Stripe API is used for payment processing and subscription management.
 
- Built with Next.js, allowing users to browse and purchase various subscription products. Stripe API is used for payment processing and subscription management.
+###
+* [Live](https://flamond-1jvr7z6un-msagerup.vercel.app/products)
 
 ## Installation
 
