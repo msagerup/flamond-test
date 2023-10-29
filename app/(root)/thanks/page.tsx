@@ -1,8 +1,10 @@
-import OrderSummary from '@/components/OrderSummay'
+
+
+import OrderSummary from '@/components/OrderSummay';
 
 const Thanks = async() => {
   return (
-    <OrderSummary />
+    <OrderSummary/>
   )
 }
 

@@ -1,27 +1,32 @@
 // import { productOrderFormData } from '@/lib/actions/form.actions';
-"use client"
+'use client';
 
 import { getDomainUrl } from '@/lib/utils';
-import { AddressElement, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import {
+  AddressElement,
+  PaymentElement,
+  useElements,
+  useStripe,
+} from '@stripe/react-stripe-js';
 import { FormEvent, useState } from 'react';
 
 // Redirect path after purchase.
-const redirectUrl = getDomainUrl(false, 'thanks')
+const redirectUrl = getDomainUrl(false, 'thanks');
 
 const StripeForm = () => {
-  const [message, setMessage] = useState<{error: string} | {}>();
+  const [message, setMessage] = useState<{ error: string } | {}>();
   const [isLoading, setIsLoading] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
 
-/**
- * Handles Stripe checkout flow.
- * Redirects user after successful purchase.  
- *
- * @param {FormEvent<HTMLFormElement>} event - Form submit event.
- * @returns {null} - Redirects user to value of redirectUrl func.
- * 
- */
+  /**
+   * Handles Stripe checkout flow.
+   * Redirects user after successful purchase.
+   *
+   * @param {FormEvent<HTMLFormElement>} event - Form submit event.
+   * @returns {null} - Redirects user to value of redirectUrl func.
+   *
+   */
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -37,27 +42,31 @@ const StripeForm = () => {
       },
     });
 
-    if (error.type === "card_error" || error.type === "validation_error") {
+    if (error.type === 'card_error' || error.type === 'validation_error') {
       setMessage(error);
     } else {
-      setMessage("An unexpected error occurred.");
+      setMessage('An unexpected error occurred.');
     }
 
     setIsLoading(false);
   };
 
-  if(message && 'error' in message) return <p>{message.error}</p>
+  if (message && 'error' in message) return <p>{message.error}</p>;
 
   return (
     <form onSubmit={handleSubmit}>
-      <AddressElement options={{ mode: 'billing' }}  />
+      <AddressElement options={{ mode: 'billing' }} />
       <PaymentElement />
-     
-      <button disabled={isLoading || !stripe || !elements} id="submit">
-        <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
-        </span>
+
+      <div className='flex justify-center mt-4'>
+      <button
+        disabled={isLoading || !stripe || !elements}
+        id='submit'
+        className='bg-blue-400 hover:bg-blue-600 font-bold py-2 px-4 rounded'
+      >
+        Subscribe
       </button>
+      </div>
     </form>
   );
 };
