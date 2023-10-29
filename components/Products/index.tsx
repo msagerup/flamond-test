@@ -1,5 +1,4 @@
 'use client';
-
 import StripeProduct from '@/components/StripeProduct';
 import { getProducts } from '@/lib/actions/user.actions';
 import { useEffect, useState } from 'react';
@@ -7,6 +6,8 @@ import Stripe from 'stripe';
 
 const Products = () => {
   const [products, setProducts] = useState<Stripe.Product[]>([]);
+
+  
   // Fetch all products from Stripe.
   useEffect(() => {
     async function getData() {

@@ -1,5 +1,4 @@
 'use server';
-
 import Stripe from 'stripe';
 import { CreateSubscriptionResult, ProductData } from '../types';
 const stripe = require('stripe')(process.env.NEXT_PUBLIC_STRIPE_CLIENT_SECRET);
@@ -92,3 +91,45 @@ export async function getProductByID(id: string): Promise<ProductData> {
     return {} as ProductData;
   }
 }
+
+// Getting the data here, is a bit silly. But we are doing this  becuase we have no DB connected.
+// This is  actually the  2 time we get this data. The first time was in the webhooks. (See comment in webhook)
+
+/**
+ * Get status on order from Stripe.
+ *
+ * @param {string} intent - Intent id from Stripe.
+
+ * @returns {Object} - Returns invoice if successful, else returns error message
+ *
+ */
+export const getStripeStatus = async (intent: string) => {
+  try {
+    const paymentIntent = await stripe.paymentIntents.retrieve(intent);
+
+    if (paymentIntent.last_payment_error) {
+    }
+    // Transaction did not go through
+    if (paymentIntent.last_payment_error) {
+      return {
+        invoice: paymentIntent.hosted_invoice_url,
+        status: paymentIntent.last_payment_error.message,
+      };
+    }
+
+    // All good
+    if (paymentIntent.invoice) {
+      const invoiceResult = await stripe.invoices.retrieve(
+        paymentIntent.invoice
+      );
+      return {
+        invoice: invoiceResult.hosted_invoice_url,
+        status: paymentIntent.status,
+      };
+    }
+
+    return paymentIntent;
+  } catch (error) {
+    throw new Error('Could not get info');
+  }
+};

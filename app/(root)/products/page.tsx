@@ -1,9 +1,12 @@
-import Products from '@/components/Products'
+import Products from '@/components/Products';
+import { Suspense } from 'react';
 
-const ProductsPage = async() => {
+const ProductsPage = async () => {
   return (
-    <Products />
-  )
-}
+    <Suspense fallback={<p>Loading...</p>}>
+      <Products />
+    </Suspense>
+  );
+};
 
-export default ProductsPage
+export default ProductsPage;

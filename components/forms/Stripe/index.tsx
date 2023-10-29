@@ -1,6 +1,5 @@
 // import { productOrderFormData } from '@/lib/actions/form.actions';
 'use client';
-
 import { getDomainUrl } from '@/lib/utils';
 import {
   AddressElement,
@@ -11,7 +10,7 @@ import {
 import { FormEvent, useState } from 'react';
 
 // Redirect path after purchase.
-const redirectUrl = getDomainUrl(true, 'thanks');
+const redirectUrl = getDomainUrl(true, 'pay_result');
 
 const StripeForm = () => {
   const [message, setMessage] = useState<{ error: string } | {}>();
@@ -59,13 +58,13 @@ const StripeForm = () => {
       <PaymentElement />
 
       <div className='flex justify-center mt-4'>
-        <button
-          disabled={isLoading || !stripe || !elements}
+       {stripe && elements &&  <button
+          disabled={isLoading}
           id='submit'
           className='bg-blue-400 hover:bg-blue-600 font-bold py-2 px-4 rounded'
         >
           Subscribe
-        </button>
+        </button>}
       </div>
     </form>
   );
