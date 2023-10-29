@@ -7,15 +7,12 @@ export const POST = async (request: Request) => {
   switch (event?.type) {
     case 'payment_intent.succeeded':
       const paymentIntent = event.data.object;
-      // Then define and call a method to handle the successful payment intent.
-      // handlePaymentIntentSucceeded(paymentIntent);
+     console.log(paymentIntent)
       break;
     case 'invoice.paid':
       eventDetails = event.data.object;
-      // getPaymentDetails(eventDetails);
-
-      // Then define and call a method to handle the successful attachment of a PaymentMethod.
-      // handlePaymentMethodAttached(paymentMethod);
+      console.log(eventDetails)
+      
       break;
     // ... handle other event types
     default:
