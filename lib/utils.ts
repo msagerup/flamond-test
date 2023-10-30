@@ -5,11 +5,22 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+
+/**
+ * Check is is empty by checking if it has any keys.
+ * 
+ * @param {Object} obj - Object. 
+ * @returns {boolean} - true or false.
+ *
+ */
+export const isObjEmpty = (obj: Object) : boolean => {
+  return Object.keys(obj).length !== 0;
+};
+
+
 function isClientSide() {
   return typeof window !== 'undefined';
 }
-
-
 
 /**
  * Constructs a complete URL using either the current domain or a specified external domain,

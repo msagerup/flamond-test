@@ -46,6 +46,7 @@ export async function createSubscription(
   }
 }
 
+
 /**
  * Collects Stripe product details from Stripe product id.
  *
@@ -61,7 +62,8 @@ export async function getProducts(): Promise<Stripe.Product[]> {
     );
 
     return products.data;
-  } catch (error) {
+  } catch (error: any) {
+    console.error(error.message);
     throw new Error('Could not get products');
   }
 }
@@ -86,8 +88,8 @@ export async function getProductByID(id: string): Promise<ProductData> {
     };
 
     return result as ProductData;
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error(error.message);
     return {} as ProductData;
   }
 }
@@ -129,7 +131,8 @@ export const getStripeStatus = async (intent: string) => {
     }
 
     return paymentIntent;
-  } catch (error) {
+  } catch (error:any) {
+    console.error(error.message)
     throw new Error('Could not get info');
   }
 };
